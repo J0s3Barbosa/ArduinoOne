@@ -3,6 +3,7 @@ var express = require("express");
 var consolidate = require("consolidate"); //1
 var _ = require("underscore");
 var bodyParser = require("body-parser");
+const path = require('path')
 
 var mongoClient = require("mongodb").MongoClient;
 
@@ -19,8 +20,8 @@ app.use(
   })
 );
 
-app.set("views", "app/views"); //Set the folder-name from where you serve the html page.
-app.use(express.static("./public")); //setting the folder name (public) where all the static files like css, js, images etc are made available
+app.set('views', path.join(__dirname, 'app/views'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set("view engine", "html");
 app.engine("html", consolidate.underscore); //Use underscore to parse templates when we do res.render
