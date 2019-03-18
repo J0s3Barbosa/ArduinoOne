@@ -43,9 +43,7 @@ server.listen(PORT, function() {
     console.log("Connected to Database");
 
     app.get("/", function(req, res) {
-      res.render("index.html", {
-        userId: req.query.userId
-      });
+      res.render("index.html");
     });
 
 
