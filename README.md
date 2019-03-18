@@ -8,7 +8,7 @@
 https://github.com/appchto/ArduinoOne 
 
 
-### Version: 0.0.1
+### Version: 3
 
 ### API Usage
 

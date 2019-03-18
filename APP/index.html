@@ -1,97 +1,64 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Igor Fonseca Albuquerque">
+<title>Wi-servo - Interface</title>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no
-		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<script src="jquery.js"></script>
 
-	<title>LED ON/OFF</title>
-	
-	<style src="/APP/ui/css/evothings-app.css"></style>
+<script>
+var myip = getip()
+document.getElementById('inputbox').value = myip;
 
-	<script>
-	// Redirect console.log to Evothings Workbench.
-	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
+$.ajaxSetup({timeout:1000});
 
-	<script src="/cordova.js"></script>
-	<script src="/APP/libs/jquery/jquery.js"></script>
-	<script src="/APP/libs/evothings/evothings.js"></script>
-	<script src="/APP/libs/evothings/arduinotcp/arduinotcp.js"></script>
+
+function mouseUpSr1(angle)
+{
+	TextVar = myform2.inputbox.value;
+	ArduinoVar = "http://" + TextVar + ":80";
+	$.get( ArduinoVar, { "sr1": angle })	;
+	{Connection: close};
+}
+function mouseUpSr2(angle)
+{
+	TextVar = myform2.inputbox.value;
+	ArduinoVar = "http://" + TextVar + ":80";
+	$.get( ArduinoVar, { "sr2": angle })	;
+	{Connection: close};
+}
+
+
+function getip(){
+	$.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+		console.log(data)
+  return JSON.stringify(data, null, 2);
+});
+
+}
+</script>
 
 </head>
 
-<body ontouchstart="">
 
-	<h1>LED ON/OFF</h1>
+<body>
 
-	<p>This application allows you to turn a LED ON or OFF on your Arduino.
+<h1> <b> Wi-servo </b> </h1>
 
-	<h2>Enter IP-address:</h2>
+<div style="margin: 0; width:500px; height:80px;">
+	<FORM NAME="myform2" ACTION="" METHOD="GET">
+		ESP8266 IP Address:
+		<INPUT TYPE="text" NAME="inputbox"  NAME="inputbox" VALUE="">
+	</FORM>
+</div>
 
-	<input id="ArduinoIpAddress" value="192.168.0.77" type="url" />
-	<br/>
-	<button class="blue" onclick="app.connect()">CONNECT</button>
-	<button class="red" onclick="app.disconnect()">DISCONNECT</button>
 
-	<br />
+<h3> Servo 1 </h3>
+<input type="range" min="20" max="170" onmouseup="mouseUpSr1(this.value)" />
+<h3> Servo 2 </h3>
+<input type="range" min="20" max="170" onmouseup="mouseUpSr2(this.value)" />
 
-	<p>Status: <span id="ArduinoStatus">Not connected</span></p>
-
-	<button class="green" onclick="app.ledOn()">LED ON</button>
-	<button class="red" onclick="app.ledOff()">LED OFF</button>
-
-	<script>
-	// Short name for Arduino TCP library.
-	var arduino = evothings.arduinotcp
-
-	// Application object.
-	var app = {}
-
-	// Pin for LED.
-	app.pin = 2
-
-	// Turn on LED.
-	app.ledOn = function()
-	{
-		app.writePin(app.pin, HIGH)
-	}
-
-	// Turn off LED.
-	app.ledOff = function()
-	{
-		app.writePin(app.pin, LOW)
-	}
-
-	app.writePin = function(pin, value)
-	{
-		arduino.pinMode(pin, OUTPUT)
-		arduino.digitalWrite(pin, value)
-	}
-
-	app.connect = function()
-	{
-		arduino.connect($('#ArduinoIpAddress').val(), 3300, function(success)
-		{
-			if (success)
-			{
-				$('#ArduinoStatus').html('Connected to the Arduino')
-			}
-			else
-			{
-				$('#ArduinoStatus').html('Connection error')
-			}
-		})
-	}
-
-	app.disconnect = function()
-	{
-		arduino.disconnect()
-		$('#ArduinoStatus').html('Disconnected')
-	}
-	</script>
 
 </body>
-
 </html>
