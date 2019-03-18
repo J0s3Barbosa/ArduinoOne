@@ -26,7 +26,7 @@ app.set("view engine", "html");
 app.engine("html", consolidate.underscore); //Use underscore to parse templates when we do res.render
 
 var server = http.Server(app);
-var PORT = 5000; //for locahost:8000
+const PORT = process.env.PORT || 5000;
 
 var io = require("socket.io")(server); //Creating a new socket.io instance by passing the HTTP server object
 
