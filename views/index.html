@@ -17,13 +17,14 @@
       <div data-role="content">
         <h1><b> Wi-servo </b></h1>
 
-        <div style="margin: 0; width:500px; height:80px;">
+        <div >
           <FORM NAME="myform2" ACTION="" METHOD="GET">
             Set Server IP Address:
             <INPUT TYPE="text" id="inputbox" NAME="inputbox" VALUE="" />
           </FORM>
+          <input type="button" data-type="button" onclick="getip()" data-icon="plus" value="Set Local IP">
         </div>
-
+<p></p>
         <h3>Servo 1</h3>
         <input
           type="range"
@@ -53,7 +54,8 @@
           document.getElementById("inputbox").value = data.geobytesremoteip;
         });
       }
-	  getip()
+    document.getElementById("inputbox").value = 'https://arduinoone.herokuapp.com/'
+    
       $.ajaxSetup({ timeout: 1000 });
 
       function mouseUpSr1(angle) {
