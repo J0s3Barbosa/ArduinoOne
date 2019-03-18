@@ -1,0 +1,21 @@
+{
+  "name": "arduinoone",
+  "version": "1.0.0",
+  "description": "* html, css, javascript interface to control arduino robot thru Jquery\r * Send data to an APi where arduino is connected",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appchto/ArduinoOne.git"
+  },
+  "author": "jose barbosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/appchto/ArduinoOne/issues"
+  },
+  "homepage": "https://github.com/appchto/ArduinoOne#readme"
+}
