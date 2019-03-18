@@ -1,87 +1,77 @@
-
-
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Page Template</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-  href="/static/jquery.mobile-1.0.min.css" />
-<script src="/static/jquery-1.6.4.min.js"></script>
-<script src="/static/jquery.mobile-1.0.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arduino One</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/jquery.mobile-1.0.min.css" />
+    <script src="/static/jquery-1.6.4.min.js"></script>
+    <script src="/static/jquery.mobile-1.0.min.js"></script>
+  </head>
+  <body>
+    <div data-role="page">
+      <div data-role="header">
+        <h1>Arduino One</h1>
+      </div>
 
-<!-- <link rel="stylesheet" href="/static/bootstrap.min.css">
-<script src="/static/jquery.min.js"></script>
-<script src="/static/bootstrap.min.js"></script> -->
+      <div data-role="content">
+        <h1><b> Wi-servo </b></h1>
 
-<script>
-	var myip = getip()
-	document.getElementById('inputbox').value = myip;
-	
-	jQuery.ajaxSetup({timeout:1000});
-	
-	
-	function mouseUpSr1(angle)
-	{
-		TextVar = myform2.inputbox.value;
-		ArduinoVar = "http://" + TextVar + ":80";
-		$.get( ArduinoVar, { "sr1": angle })	;
-		{Connection: close};
-	}
-	function mouseUpSr2(angle)
-	{
-		TextVar = myform2.inputbox.value;
-		ArduinoVar = "http://" + TextVar + ":80";
-		$.get( ArduinoVar, { "sr2": angle })	;
-		{Connection: close};
-	}
-	
-	
-	function getip(){
-		jQuery.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
-			console.log(data)
-	  return JSON.stringify(data, null, 2);
-	});
-	
-	}
-	</script>
+        <div style="margin: 0; width:500px; height:80px;">
+          <FORM NAME="myform2" ACTION="" METHOD="GET">
+            Set Server IP Address:
+            <INPUT TYPE="text" id="inputbox" NAME="inputbox" VALUE="" />
+          </FORM>
+        </div>
 
-</head> 
-<body>
-  <div data-role="page">
-    <div data-role="header">
-      <h1>Page Header</h1>
+        <h3>Servo 1</h3>
+        <input
+          type="range"
+          min="20"
+          max="170"
+          onmouseup="mouseUpSr1(this.value)"
+        />
+        <h3>Servo 2</h3>
+        <input
+          type="range"
+          min="20"
+          max="170"
+          onmouseup="mouseUpSr2(this.value)"
+        />
+      </div>
+
+      <div data-role="footer" data-position="fixed">
+        <h4> --- </h4>
+      </div>
     </div>
 
-    <div data-role="content">
+    <script>
+      function getip() {
+        $.getJSON("http://gd.geobytes.com/GetCityDetails?callback=?", function(
+          data
+        ) {
+          document.getElementById("inputbox").value = data.geobytesremoteip;
+        });
+      }
+	  getip()
+      $.ajaxSetup({ timeout: 1000 });
 
- 
-			<h1> <b> Wi-servo </b> </h1>
-			
-			<div style="margin: 0; width:500px; height:80px;">
-				<FORM NAME="myform2" ACTION="" METHOD="GET">
-					ESP8266 IP Address:
-					<INPUT TYPE="text" NAME="inputbox"  NAME="inputbox" VALUE="">
-				</FORM>
-			</div>
-			
-			
-			<h3> Servo 1 </h3>
-			<input type="range" min="20" max="170" onmouseup="mouseUpSr1(this.value)" />
-			<h3> Servo 2 </h3>
-			<input type="range" min="20" max="170" onmouseup="mouseUpSr2(this.value)" />
-			
-
-
-		</div>
-
-    <div data-role="footer" data-position="fixed">
-      <h4>Page Footer</h4>
-    </div>
-  </div>
-
-</body>
+      function mouseUpSr1(angle) {
+        TextVar = myform2.inputbox.value;
+        ArduinoVar = "http://" + TextVar + ":80";
+        $.get(ArduinoVar, { sr1: angle });
+        {
+          Connection: close;
+        }
+      }
+      function mouseUpSr2(angle) {
+        TextVar = myform2.inputbox.value;
+        ArduinoVar = "http://" + TextVar + ":80";
+        $.get(ArduinoVar, { sr2: angle });
+        {
+          Connection: close;
+        }
+      }
+    </script>
+  </body>
 </html>
-
- 
