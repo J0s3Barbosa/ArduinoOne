@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arduino One</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+        <style>
+        /* Start with core styles outside of a media query that apply to mobile and up */
+/* Global typography and design elements, stacked containers */
+body { font-family: Helvetica, san-serif; }
+H1 { color: green; }
+a:link { color:purple; }
+
+/* Stack the two content containers */
+.main,
+.sidebar { display:block; width:100%; }
+
+/* First breakpoint at 576px */
+/* Inherits mobile styles, but floats containers to make columns */
+@media all and (min-width: 36em){
+	.main { float: left; width:60%; }
+	.sidebar { float: left; width:40%; }
+}
+
+/* Second breakpoint at 800px */
+/* Adjusts column proportions, tweaks base H1 */
+@media all and (min-width: 50em){
+	.main { width:70%; }
+	.sidebar { width:30%; }
+
+	/* You can also tweak any other styles in a breakpoint */
+	H1 { color: blue; font-size:1.2em }
+}
+
+        </style>
+  </head>
+  <body>
+
+      <div data-role="page">
+
+          <div data-role="header">
+            <h1>Control by Mobile Movement</h1>
+          </div><!-- /header -->
+        
+          <div role="main" class="ui-content">
+
+
+              <table class="table table-striped table-bordered">
+                  <tr>
+                    <td>Tilt Left/Right [gamma]</td>
+                    <td id="doTiltLR"></td>
+                  </tr>
+                  <tr>
+                    <td>Tilt Front/Back [beta]</td>
+                    <td id="doTiltFB"></td>
+                  </tr>
+                  <tr>
+                    <td>Direction [alpha]</td>
+                    <td id="doDirection"></td>
+                  </tr>
+                </table>
+                <div class="container" id="logoContainer">
+                  <img src="/static/images/d489caacb1c8f31e558cc6c12465380a.png" id="imgLogo">
+                </div>
+                <script>
+    if ('DeviceOrientationEvent' in window) {
+      window.addEventListener('deviceorientation', deviceOrientationHandler, false);
+    } else {
+      document.getElementById('logoContainer').innerText = 'Device Orientation API not supported.';
+    }
+    
+    function deviceOrientationHandler (eventData) {
+      var tiltLR = eventData.gamma;
+      var tiltFB = eventData.beta;
+      var dir = eventData.alpha;
+      
+      document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+      document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+      document.getElementById("doDirection").innerHTML = Math.round(dir);
+    
+      var logo = document.getElementById("imgLogo");
+      logo.style.webkitTransform = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+      logo.style.MozTransform = "rotate(" + tiltLR + "deg)";
+      logo.style.transform = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+    }
+                </script>
+            <style>
+            
+            .container {
+      perspective: 300;
+      -webkit-perspective: 300;
+    }
+    
+    #imgLogo {
+      width: 275px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      padding: 15px;
+    }
+    
+    </style>
+              </div><!-- /content -->
+        
+          <div data-role="footer">
+            <h4></h4>
+          </div><!-- /footer -->
+        </div><!-- /page -->
+        
+                    
+  </body>
+</html>

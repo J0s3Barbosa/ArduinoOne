@@ -46,7 +46,9 @@ server.listen(PORT, function() {
     app.get("/", function(req, res) {
       res.render("index.html");
     });
-
+    app.get("/index2", function(req, res) {
+      res.render("index2.html");
+    });
 
     io.on("connection", function(socket) {
       //Listen on the 'connection' event for incoming sockets
