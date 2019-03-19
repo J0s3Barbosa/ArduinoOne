@@ -22,6 +22,7 @@ app.use(
 
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 app.set("view engine", "html");
 app.engine("html", consolidate.underscore); //Use underscore to parse templates when we do res.render
