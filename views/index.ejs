@@ -1,0 +1,48 @@
+
+    <title>Control by API<</title>
+    
+<!-- Start of first page -->
+<div data-role="page" id="foo" data-swipeleft="index2.ejs" data-swiperight="index3.ejs">
+
+    <div data-role="header">
+      <h1>Control by API</h1>
+    </div><!-- /header -->
+  
+    <div role="main" class="ui-content">
+
+        <h1><b> Wi-servo </b></h1>
+        
+        <FORM NAME="myform2" ACTION="" METHOD="GET">
+          Set Server IP Address:
+          <INPUT TYPE="text" id="inputbox" NAME="inputbox" VALUE="" />
+      </FORM>
+    
+      <button id="login" data-theme="b" onclick="getip()" >Set Local IP</button>
+
+      <h3>Servo 1</h3>
+      <input
+        type="range"
+        min="20"
+        max="170"
+        onmouseup="mouseUpSr1(this.value)"
+      />
+      <h3>Servo 2</h3>
+      <input
+        type="range"
+        min="20"
+        max="170"
+        onmouseup="mouseUpSr2(this.value)"
+      />
+
+
+      <p>View internal page called <a href="#bar">bar</a></p>
+    </div><!-- /content -->
+  
+    <div data-role="footer">
+      <h4></h4>
+    </div><!-- /footer -->
+  </div><!-- /page -->
+  
+
+
+  

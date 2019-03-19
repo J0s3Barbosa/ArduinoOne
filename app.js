@@ -1,18 +1,15 @@
 var http = require("http");
 var express = require("express");
-var consolidate = require("consolidate"); //1
 var _ = require("underscore");
 var bodyParser = require("body-parser");
 const path = require('path')
+const expressLayouts = require('express-ejs-layouts');
 
 var mongoClient = require("mongodb").MongoClient;
 
 var app = express();
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 app.use(
   bodyParser.json({
@@ -20,12 +17,12 @@ app.use(
   })
 );
 
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
-
-app.set("view engine", "html");
-app.engine("html", consolidate.underscore); //Use underscore to parse templates when we do res.render
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 var server = http.Server(app);
 const PORT = process.env.PORT || 5000;
@@ -45,15 +42,18 @@ server.listen(PORT, function() {
     console.log("Connected to Database");
 
     app.get("/", function(req, res) {
-      res.render("index.html");
+      res.render("index");
     });
+
     app.get("/index2", function(req, res) {
-      res.render("index2.html");
+      res.render("index2");
     });
+
     app.get("/index3", function(req, res) {
-      res.render("index3.html");
+      res.render("index3");
     });
     
+
     io.on("connection", function(socket) {
       //Listen on the 'connection' event for incoming sockets
       console.log("A user just connected");
