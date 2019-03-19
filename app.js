@@ -49,7 +49,10 @@ server.listen(PORT, function() {
     app.get("/index2", function(req, res) {
       res.render("index2.html");
     });
-
+    app.get("/index3", function(req, res) {
+      res.render("index3.html");
+    });
+    
     io.on("connection", function(socket) {
       //Listen on the 'connection' event for incoming sockets
       console.log("A user just connected");
