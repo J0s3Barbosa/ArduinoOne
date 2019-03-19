@@ -17,41 +17,67 @@
       </div>
 
       <div data-role="content">
-          <canvas id="myCanvas" width="360" height="450" style="border:1px solid #d3d3d3;">
-            </canvas>
+        
+          <table class="table table-striped table-bordered">
+              <tr>
+                <td>Tilt Left/Right [gamma]</td>
+                <td id="doTiltLR"></td>
+              </tr>
+              <tr>
+                <td>Tilt Front/Back [beta]</td>
+                <td id="doTiltFB"></td>
+              </tr>
+              <tr>
+                <td>Direction [alpha]</td>
+                <td id="doDirection"></td>
+              </tr>
+            </table>
+            
+            <div class="container" id="logoContainer">
+              <img src="https://www.w3.org/html/logo/downloads/HTML5_Badge_512.png" id="imgLogo">
+            </div>
+            
+            <p><small>Demo from <a href="https://www.html5rocks.com/en/tutorials/device/orientation/" target="_blank">HTML5 Rocks</a> article.</small></p>
+
+
             <script>
-              function deviceOrientationListener(event) {
-                var c = document.getElementById("myCanvas");
-                var ctx = c.getContext("2d");
-        
-                ctx.clearRect(0, 0, c.width, c.height);
-                ctx.fillStyle = "#FF7777";
-                ctx.font = "14px Verdana";
-                ctx.fillText("Alpha: " + Math.Round(event.alpha), 10, 20);
-                ctx.beginPath();
-                ctx.moveTo(180, 75);
-                ctx.lineTo(210, 75);
-                ctx.arc(180, 75, 60, 0, event.alpha * Math.PI / 180);
-                ctx.fill();
-        
-                ctx.fillStyle = "#FF6600";
-                ctx.fillText("Beta: " + Math.round(event.beta), 10, 140);
-                ctx.beginPath();
-                ctx.fillRect(180, 150, event.beta, 90);
-        
-                ctx.fillStyle = "#FF0000";
-                ctx.fillText("Gamma: " + Math.round(event.gamma), 10, 270);
-                ctx.beginPath();
-                ctx.fillRect(90, 340, 180, event.gamma);
-              }
-        
-              if (window.DeviceOrientationEvent) {
-                window.addEventListener("deviceorientation", deviceOrientationListener);
-              } else {
-                alert("Sorry, your browser doesn't support Device Orientation");
-              }
+if ('DeviceOrientationEvent' in window) {
+  window.addEventListener('deviceorientation', deviceOrientationHandler, false);
+} else {
+  document.getElementById('logoContainer').innerText = 'Device Orientation API not supported.';
+}
+
+function deviceOrientationHandler (eventData) {
+  var tiltLR = eventData.gamma;
+  var tiltFB = eventData.beta;
+  var dir = eventData.alpha;
+  
+  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  document.getElementById("doDirection").innerHTML = Math.round(dir);
+
+  var logo = document.getElementById("imgLogo");
+  logo.style.webkitTransform = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+  logo.style.MozTransform = "rotate(" + tiltLR + "deg)";
+  logo.style.transform = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+}
             </script>
+        <style>
         
+        .container {
+  perspective: 300;
+  -webkit-perspective: 300;
+}
+
+#imgLogo {
+  width: 275px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 15px;
+}
+
+</style>
 
           <div class="garden">
               <div class="ball"></div>
